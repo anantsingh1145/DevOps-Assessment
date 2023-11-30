@@ -1,4 +1,5 @@
 ## Declarative pipeline
+## we need to add the webhook to git for whenever any changes happens in code the pipeline will auto trigger
 
 pipeline {
     agent any
