@@ -1,0 +1,23 @@
+## Declarative pipeline
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    def kubeConfig = readFile('etc/kubernetes/kubeconfig') // Path to our kubeconfig file
+
+                    withKubeConfig(
+                        credentialsId: 'kube-credentials', // Kubernetes credentials configured in Jenkins
+                        serverUrl: 'kubernetes-server-url', // Kubernetes API server URL
+                        kubeconfigContext: 'kube-context' // Kubernetes context
+                    ) {
+                        sh "kubectl apply -f /home/devops/deployment.yaml" // Path to our deployment manifest
+                    }
+                }
+            }
+        }
+    }
+}
